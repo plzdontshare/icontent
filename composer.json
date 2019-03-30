@@ -1,0 +1,27 @@
+{
+  "name": "plzdontshare/icontent",
+  "description": "iContent Extractor",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "NoHate",
+      "email": "nohate@example.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "symfony/console": "^4.2",
+    "guzzlehttp/guzzle": "^6.3",
+    "andreskrey/readability.php": "^2.0",
+    "illuminate/support": "^5.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "IContent\\": "src/"
+    }
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^4.2"
+  }
+}

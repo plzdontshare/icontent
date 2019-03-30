@@ -1,0 +1,4 @@
+/content/*
+!/content/.gitkeep
+/links.txt
+/content.txt
