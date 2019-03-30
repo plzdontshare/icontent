@@ -183,13 +183,13 @@ class DownloadContent extends Command
             $this->saveTo = ROOT_PATH . '/content';
         }
         
-        $saveTo = $this->saveTo . '/' . $this->startAt->format('Y-m-d H:i');
+        $saveTo = $this->saveTo . DIRECTORY_SEPARATOR . $this->startAt->format('Y-m-d H:i');
         if (!is_dir($saveTo)) {
             mkdir($saveTo, 0777, true);
         }
         
         $title = preg_replace("~[^a-zA-Zа-яА-Я0-9 ]~uis", "", $content->title);
-        $filename = $saveTo . '/' . $title . '.txt';
+        $filename = $saveTo . DIRECTORY_SEPARATOR . $title . '.txt';
         
         file_put_contents($filename, $content->content,LOCK_EX);
     }
