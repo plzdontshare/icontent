@@ -148,7 +148,7 @@ class DownloadContent extends Command
                 $this->output->writeln("\e[0A\rОбработано [{$i}/{$links_count}]");
                 $i++;
             } catch (Exception $e) {
-                $this->output->writeln("Ошибка обработки ссылки: \"{$link['url']}\". {$e->getMessage()}");
+                $this->output->writeln("Ошибка обработки ссылки: \"{$link}\". {$e->getMessage()}");
                 $this->output->writeln("");
             }
         }
