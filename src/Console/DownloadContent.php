@@ -6,15 +6,12 @@ namespace IContent\Console;
 
 use Carbon\Carbon;
 use Exception;
-use IContent\Services\ContentExtractor\ContentExtractorInterface;
-use Illuminate\Support\Collection;
 use IContent\Services\ContentExtractor\ContentExtractorService;
 use IContent\Services\LinksExtractor\LinksExtractorFactory;
 use IContent\Services\Network\NetworkService;
+use Illuminate\Support\Str;
 use stdClass;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -121,13 +118,19 @@ class DownloadContent extends Command
         $this->output->writeln("Начинаем обработку: [{$url}]");
         $this->output->writeln("Получаем список ссылок с источника: [{$url}]");
         
-        $links = $this->linksExtractor->extractLinksFromOrigin($url);
-        if ($links->isEmpty()) {
-            $this->output->writeln("Ничего не нашли.");
-            return;
-        }
+        if (Str::endsWith($url, '.xml')) {
+            $links = $this->linksExtractor->extractLinksFromOrigin($url);
+            if ($links->isEmpty()) {
+                $this->output->writeln("Ничего не нашли.");
+                return;
+            }
     
-        $links_count = $links->count();
+            $links_count = $links->count();
+        } else {
+            $links_count = 1;
+            $links[] = $url;
+        }
+        
         $this->output->writeln("Нашли всего {$links_count} ссылок.");
     
         $i = 1;
