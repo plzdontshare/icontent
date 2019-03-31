@@ -139,8 +139,10 @@ class DownloadContent extends Command
             try
             {
                 $content = $this->contentExtractor->extract($link);
+                $content->content = str_replace('><', '> <', $content->content);
                 if ($this->textMode === static::TEXT_MODE_TEXT) {
                     $content->content = strip_tags($content->content);
+                    $content->content = preg_replace("~\s+~", " ", $content->content);
                 }
                 
                 $this->saveContent($content);
@@ -153,6 +155,8 @@ class DownloadContent extends Command
             }
         }
     }
+    
+    
     
     private function saveContent(stdClass $content)
     {
