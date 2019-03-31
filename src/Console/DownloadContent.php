@@ -75,6 +75,7 @@ class DownloadContent extends Command
         $this->addOption('text-mode', 'm', InputOption::VALUE_REQUIRED, 'Режим сохранения текста html/text', static::TEXT_MODE_TEXT);
         $this->addOption('save-mode', 's', InputOption::VALUE_REQUIRED, 'Режим сохранения текста html/text', static::SAVE_MODE_SINGLE);
         $this->addOption('save-to', null, InputOption::VALUE_REQUIRED, 'Путь для сохранения результата. (путь к файлу или к папке в зависимости от выбранного save-mode');
+        $this->addOption('user-agent', 'g', InputOption::VALUE_REQUIRED, 'Указать свой User Agent');
     }
     
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -86,6 +87,9 @@ class DownloadContent extends Command
         $this->saveTo = $input->getOption('save-to');
         $this->output = $output;
         $this->startAt = Carbon::now();
+        $userAgent = $input->getOption('user-agent') ?? '';
+        $this->contentExtractor->setUserAgent($userAgent);
+        $this->linksExtractor->setUserAgent($userAgent);
         
         $this->showHeader();
         

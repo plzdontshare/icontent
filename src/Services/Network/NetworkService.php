@@ -14,6 +14,11 @@ class NetworkService
     private $client;
     
     /**
+     * @var string
+     */
+    private $userAgent;
+    
+    /**
      * NetworkService constructor.
      *
      * @param Client $client
@@ -33,10 +38,21 @@ class NetworkService
     {
         $response = $this->client->get($url, [
             'headers' => array_merge([
-                'User-Agent' => 'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Googlebot/2.1; +http://www.google.com/bot.html) Safari/537.36',
+                'User-Agent' => $this->getUserAgent(),
+                'Referer'    => $url,
             ], $headers),
         ]);
         
         return $response->getBody()->getContents();
+    }
+    
+    public function setUserAgent(string $userAgent)
+    {
+        $this->userAgent = $userAgent;
+    }
+    
+    public function getUserAgent(): string
+    {
+        return $this->userAgent ?? 'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Googlebot/2.1; +http://www.google.com/bot.html) Safari/537.36';
     }
 }

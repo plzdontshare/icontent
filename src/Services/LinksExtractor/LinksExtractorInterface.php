@@ -17,4 +17,11 @@ interface LinksExtractorInterface
      * @return Collection
      */
     public function extractLinksFromOrigin(string $url): Collection;
+    
+    /**
+     * @param string $userAgent
+     *
+     * @return mixed
+     */
+    public function setUserAgent(string $userAgent);
 }

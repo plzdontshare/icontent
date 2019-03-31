@@ -39,7 +39,7 @@ class ContentExtractorService
         
         $title = (string)$readability->getTitle();
         $content = (string)$readability->getContent();
-        $content = $this->sanitizeContent($url, $content);
+        $content = $this->sanitizeContent($content);
         
         return (object)compact('title', 'content');
     }
@@ -67,13 +67,12 @@ class ContentExtractorService
     /**
      * Remove junk from content
      *
-     * @param string $base_url
      * @param string $content
      * @param array $cleanup_rules
      *
      * @return string
      */
-    private function sanitizeContent(string $base_url, string $content, array $cleanup_rules = []): string
+    private function sanitizeContent(string $content, array $cleanup_rules = []): string
     {
         // Fix encoding
         if (($encoding = mb_detect_encoding($content)) !== 'UTF-8') {
@@ -86,13 +85,14 @@ class ContentExtractorService
         
         // Remove links
         $content = preg_replace("#<a.*>(.*)</a>#Uuis", "$1", $content);
-        // Remove tag attributes (class/id/etc)
-        $content = preg_replace("#<(?!img)(\w+)\s(.*)>#Uuis", "<$1>", $content);
         // Remove closing img tag
         $content = preg_replace("#</img>#Uuis", "", $content);
-        // Remove attributes from img tag
-        $content = preg_replace("#<img.*src=['\"](.*)['\"].*>#Uuis", "<img src=\"$1\">", $content);
         
         return $content;
+    }
+    
+    public function setUserAgent(string $userAgent)
+    {
+        $this->network->setUserAgent($userAgent);
     }
 }

@@ -52,4 +52,14 @@ class SitemapLinksExtractor implements LinksExtractorInterface
     
         return $links;
     }
+    
+    /**
+     * @param string $userAgent
+     *
+     * @return mixed
+     */
+    public function setUserAgent(string $userAgent)
+    {
+        $this->network->setUserAgent($userAgent);
+    }
 }

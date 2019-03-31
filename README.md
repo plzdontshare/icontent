@@ -11,6 +11,7 @@
 - --text-mode (-m) - Варианты: `text` либо `html`. При выборе варианта `text`(по-умолчанию) все html теги будут вырезаться. При выборе варианта `html` исходная структура html будут сохраняться.
 - --save-mode (-s) - Варианты: `single` либо `multi`. При выборе варианта `single` статьи будут складываться в один TXT файл. При выборе варианта `multi` статьи будут складываться в указанную папку, каждая в отдельный файл.
 - --save-to - В зависимости от выбранного `save-mode` нужно указать либо путь к файлу (при выборе `save-mode=single`), либо путь к папке (при выборе `save-mode=multi`)
+- --user-agent (-g) - Указать свой кастомный User Agent.
 
 **Примеры запуска:**
 ```
@@ -27,6 +28,9 @@ $ php run.php download --file links.txt
 
 # Сохранять только текст, каждый в свой файл в папку my-content
 $ php run.php download --text-mode=text --save-mode=multi --save-to=my-content --url="http://site.com/sitemap.xml"
+
+# Указываем свой User Agent
+$ php run.php download --url="http://site.com/sitemap.xml" --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
 ```
 
 - Автор: NoHate
