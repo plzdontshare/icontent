@@ -205,7 +205,7 @@ class DownloadContent extends Command
     
     private function showHeader()
     {
-        $this->output->writeln(sprintf("\t\t\tSDL Translation v%s", "0.2"));
+        $this->output->writeln(sprintf("\t\t\tiContent Extractor v%s", "0.2.1"));
         $this->output->writeln("\t\t\tAuthor:  NoHate");
         $this->output->writeln("\t\t\tContact: @PlzDontHate");
         $this->output->writeln('');
