@@ -36,13 +36,17 @@ class SitemapLinksExtractor implements LinksExtractorInterface
     {
         $content = $this->network->get($url);
         
+        if (Str::endsWith($url, 'xml.gz')) {
+            $content = gzdecode($content);
+        }
+        
         $xml = simplexml_load_string($content);
     
         $links = collect([]);
         foreach ($xml as $link) {
             $loc = (string)$link->loc;
             
-            if (Str::endsWith($loc, '.xml')) {
+            if (Str::endsWith($loc, ['.xml', 'xml.gz'])) {
                 $links = $links->merge($this->extractLinksFromOrigin($loc));
                 continue;
             }

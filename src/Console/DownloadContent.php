@@ -122,7 +122,7 @@ class DownloadContent extends Command
         $this->output->writeln("Начинаем обработку: [{$url}]");
         $this->output->writeln("Получаем список ссылок с источника: [{$url}]");
         
-        if (Str::endsWith($url, '.xml')) {
+        if (Str::endsWith($url, ['.xml', '.xml.gz'])) {
             $links = $this->linksExtractor->extractLinksFromOrigin($url);
             if ($links->isEmpty()) {
                 $this->output->writeln("Ничего не нашли.");
