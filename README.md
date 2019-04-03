@@ -33,5 +33,13 @@ $ php run.php download --text-mode=text --save-mode=multi --save-to=my-content -
 $ php run.php download --url="http://site.com/sitemap.xml" --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
 ```
 
+## FAQ
+
+> Скрипт падает с ошибкой: "PHP Fatal error: Uncaught TypeError: Argument 1 passed to iterator_to_array() must implement interface Traversable" что делать?
+>
+У некоторых __Windows__ пользователей выскакивает подобная ошибка. При запуске на Linux такой ошибки не наблюдалось.
+Пока что у меня нету решения для данной проблемы, так что остается либо запускать скрипт на Linux, либо пропускать ссылку/sitemap на которых вылетает данная ошибка.
+ 
+
 - Автор: NoHate
 - Контакты: @PlzDontHate
