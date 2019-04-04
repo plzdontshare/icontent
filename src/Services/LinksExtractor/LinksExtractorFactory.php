@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace IContent\Services\LinksExtractor;
 
-use GuzzleHttp\Client;
 use IContent\Services\Network\NetworkService;
 
 class LinksExtractorFactory
 {
     /**
      * @param string $type
+     * @param NetworkService $networkService
      *
      * @return LinksExtractorInterface
      */
-    public static function make(string $type): LinksExtractorInterface
+    public static function make(string $type, NetworkService $networkService): LinksExtractorInterface
     {
-        $client = new Client;
-        $network = new NetworkService($client);
+        $network = $networkService;
+        
         switch ($type) {
             case 'sitemap':
                 $instance = new SitemapLinksExtractor($network);

@@ -55,18 +55,6 @@ class DownloadContent extends Command
      */
     private $startAt;
     
-    /**
-     * DownloadContent constructor.
-     */
-    public function __construct()
-    {
-        $this->linksExtractor = LinksExtractorFactory::make('sitemap');
-        $network = new NetworkService();
-        $this->contentExtractor = new ContentExtractorService($network);
-        parent::__construct();
-    }
-    
-    
     protected function configure()
     {
         $this->setDescription("Показать список добавленных сайтов");
@@ -88,8 +76,11 @@ class DownloadContent extends Command
         $this->output = $output;
         $this->startAt = Carbon::now();
         $userAgent = $input->getOption('user-agent') ?? '';
-        $this->contentExtractor->setUserAgent($userAgent);
-        $this->linksExtractor->setUserAgent($userAgent);
+    
+        $network = new NetworkService;
+        $network->setUserAgent($userAgent);
+        $this->linksExtractor = LinksExtractorFactory::make('sitemap', $network);
+        $this->contentExtractor = new ContentExtractorService($network);
         
         $this->showHeader();
         

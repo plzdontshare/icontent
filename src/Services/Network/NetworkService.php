@@ -48,7 +48,7 @@ class NetworkService
     
     public function setUserAgent(string $userAgent)
     {
-        $this->userAgent = $userAgent;
+        $this->userAgent = empty($userAgent) ? null : $userAgent;
     }
     
     public function getUserAgent(): string

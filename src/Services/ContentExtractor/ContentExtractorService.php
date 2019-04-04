@@ -88,9 +88,4 @@ class ContentExtractorService
         
         return $content;
     }
-    
-    public function setUserAgent(string $userAgent)
-    {
-        $this->network->setUserAgent($userAgent);
-    }
 }
