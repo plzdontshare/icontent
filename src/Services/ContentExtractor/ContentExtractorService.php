@@ -84,6 +84,7 @@ class ContentExtractorService
         $content = preg_replace("#</img>#Uuis", "", $content);
         // Remove trash
         $content = preg_replace("~&#xD;~", "", $content);
+        $content = str_replace('><', '> <', $content);
         
         return $content;
     }
