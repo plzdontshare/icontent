@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace IContent\Services\LinksExtractor;
 
+use Exception;
 use Illuminate\Support\Str;
 use IContent\Services\Network\NetworkService;
 use Illuminate\Support\Collection;
@@ -34,14 +35,20 @@ class SitemapLinksExtractor implements LinksExtractorInterface
      */
     public function extractLinksFromOrigin(string $url): Collection
     {
-        $content = $this->network->get($url);
+        $links = collect([]);
+        
+        try
+        {
+            $content = $this->network->get($url);
+        } catch (Exception $e) {
+            return $links;
+        }
         
         if (Str::endsWith($url, 'xml.gz')) {
             $content = gzdecode($content);
         }
         
         $xml = @simplexml_load_string($content);
-        $links = collect([]);
         
         if ($xml === false) {
             return $links;
