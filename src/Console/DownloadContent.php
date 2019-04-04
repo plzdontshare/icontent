@@ -134,6 +134,10 @@ class DownloadContent extends Command
             try
             {
                 $content = $this->contentExtractor->extract($link);
+                if (empty($content->content)) {
+                    continue;
+                }
+                
                 if ($this->textMode === static::TEXT_MODE_TEXT) {
                     $content->content = strip_tags($content->content);
                     $content->content = preg_replace("~\s+~", " ", $content->content);

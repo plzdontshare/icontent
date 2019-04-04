@@ -4,9 +4,9 @@ namespace IContent\Services\ContentExtractor;
 
 use andreskrey\Readability\Configuration;
 use andreskrey\Readability\Readability;
-use Illuminate\Support\Str;
 use IContent\Services\Network\NetworkService;
 use stdClass;
+use TypeError;
 
 class ContentExtractorService
 {
@@ -34,12 +34,18 @@ class ContentExtractorService
     public function extract(string $url): \stdClass
     {
         $html = $this->network->get($url);
+    
+        $title = '';
+        $content = '';
         
-        $readability = $this->initReadability($url, $html);
-        
-        $title = (string)$readability->getTitle();
-        $content = (string)$readability->getContent();
-        $content = $this->sanitizeContent($content);
+        try
+        {
+            $readability = $this->initReadability($url, $html);
+    
+            $title = (string)$readability->getTitle();
+            $content = (string)$readability->getContent();
+            $content = $this->sanitizeContent($content);
+        } catch (TypeError $e) {}
         
         return (object)compact('title', 'content');
     }
