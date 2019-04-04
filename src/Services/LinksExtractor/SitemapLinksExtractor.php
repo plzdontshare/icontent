@@ -40,9 +40,13 @@ class SitemapLinksExtractor implements LinksExtractorInterface
             $content = gzdecode($content);
         }
         
-        $xml = simplexml_load_string($content);
-    
+        $xml = @simplexml_load_string($content);
         $links = collect([]);
+        
+        if ($xml === false) {
+            return $links;
+        }
+        
         foreach ($xml as $link) {
             $loc = (string)$link->loc;
             
