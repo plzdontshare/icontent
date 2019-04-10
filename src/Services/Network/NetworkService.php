@@ -37,6 +37,7 @@ class NetworkService
     public function get(string $url, array $headers = []): string
     {
         $response = $this->client->get($url, [
+            'timeout' => 20,
             'headers' => array_merge([
                 'User-Agent' => $this->getUserAgent(),
                 'Referer'    => $url,
