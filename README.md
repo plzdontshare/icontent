@@ -12,6 +12,7 @@
 - --save-mode (-s) - Варианты: `single` либо `multi`. При выборе варианта `single` статьи будут складываться в один TXT файл. При выборе варианта `multi` статьи будут складываться в указанную папку, каждая в отдельный файл.
 - --save-to - В зависимости от выбранного `save-mode` нужно указать либо путь к файлу (при выборе `save-mode=single`), либо путь к папке (при выборе `save-mode=multi`)
 - --user-agent (-g) - Указать свой кастомный User Agent.
+- --url-filter - Фильтр для ссылок в sitemap. Можно указывать либо часть URL, либо регулярку.
 
 **Примеры запуска:**
 ```
@@ -31,6 +32,16 @@ $ php run.php download --text-mode=text --save-mode=multi --save-to=my-content -
 
 # Указываем свой User Agent
 $ php run.php download --url="http://site.com/sitemap.xml" --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
+
+# Фильтруем с помощью --url-filter
+# Возьмет только ссылки где есть "sitemap-post-".
+# Например:
+# http://site.com/sitemap-post-1.xml
+# http://site.com/sitemap-post-2019-12-01.xml
+$ php run.php download --url http://site.com/sitemap.xml --url-filter "sitemap-post-"
+
+# фильтруем регуляркой:
+$ php run.php download --url http://site.com/sitemap.xml --url-filter ".*article/\d+"
 ```
 
 ## FAQ

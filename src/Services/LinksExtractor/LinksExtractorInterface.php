@@ -13,8 +13,9 @@ interface LinksExtractorInterface
      * Extract links from origin and return collection
      *
      * @param string $url
+     * @param string $urlFilter
      *
      * @return Collection
      */
-    public function extractLinksFromOrigin(string $url): Collection;
+    public function extractLinksFromOrigin(string $url, string $urlFilter): Collection;
 }

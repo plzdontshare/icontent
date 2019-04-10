@@ -30,10 +30,11 @@ class SitemapLinksExtractor implements LinksExtractorInterface
      * Extract links from origin and return collection
      *
      * @param string $url
+     * @param string $urlFilter
      *
      * @return Collection
      */
-    public function extractLinksFromOrigin(string $url): Collection
+    public function extractLinksFromOrigin(string $url, string $urlFilter): Collection
     {
         $links = collect([]);
         
@@ -57,8 +58,12 @@ class SitemapLinksExtractor implements LinksExtractorInterface
         foreach ($xml as $link) {
             $loc = (string)$link->loc;
             
+            if (!empty($urlFilter) && !preg_match("~{$urlFilter}~", $loc)) {
+                continue;
+            }
+            
             if (Str::endsWith($loc, ['.xml', 'xml.gz'])) {
-                $links = $links->merge($this->extractLinksFromOrigin($loc));
+                $links = $links->merge($this->extractLinksFromOrigin($loc, ''));
                 continue;
             }
         

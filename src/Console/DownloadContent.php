@@ -49,6 +49,10 @@ class DownloadContent extends Command
      * @var string
      */
     private $saveTo;
+    /**
+     * @var string
+     */
+    private $urlFilter;
     
     /**
      * @var Carbon
@@ -64,6 +68,7 @@ class DownloadContent extends Command
         $this->addOption('save-mode', 's', InputOption::VALUE_REQUIRED, 'Режим сохранения текста html/text', static::SAVE_MODE_SINGLE);
         $this->addOption('save-to', null, InputOption::VALUE_REQUIRED, 'Путь для сохранения результата. (путь к файлу или к папке в зависимости от выбранного save-mode');
         $this->addOption('user-agent', 'g', InputOption::VALUE_REQUIRED, 'Указать свой User Agent');
+        $this->addOption('url-filter', null, InputOption::VALUE_REQUIRED, 'Фильтр для ссылок в sitemap');
     }
     
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -76,6 +81,7 @@ class DownloadContent extends Command
         $this->output = $output;
         $this->startAt = Carbon::now();
         $userAgent = $input->getOption('user-agent') ?? '';
+        $this->urlFilter = $input->getOption('url-filter') ?? '';
     
         $network = new NetworkService;
         $network->setUserAgent($userAgent);
@@ -114,7 +120,7 @@ class DownloadContent extends Command
         $this->output->writeln("Получаем список ссылок с источника: [{$url}]");
         
         if (Str::endsWith($url, ['.xml', '.xml.gz'])) {
-            $links = $this->linksExtractor->extractLinksFromOrigin($url);
+            $links = $this->linksExtractor->extractLinksFromOrigin($url, $this->urlFilter);
             if ($links->isEmpty()) {
                 $this->output->writeln("Ничего не нашли.");
                 return;
